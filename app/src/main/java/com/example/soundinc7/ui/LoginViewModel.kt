@@ -36,6 +36,14 @@ class LoginViewModel : ViewModel() {
         _rememberSession.value = value;
     }
 
+    fun resetForm(){
+        _email.value = ""
+        _password.value = ""
+        _rememberSession.value = false
+        _emailError.value = false
+        _passwordError.value = false
+    }
+
     // Validation Login  Logic
     fun validateAndLogin(): Boolean {
         val isEmailValid = _email.value.contains("@") && _email.value.contains(".")
