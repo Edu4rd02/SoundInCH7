@@ -171,7 +171,8 @@ fun LoginContent(
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
-    onNavigateToRegister: () -> Unit
+    onNavigateToRegister: () -> Unit,
+    onLoginSuccess: () -> Unit
 ){
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -221,8 +222,8 @@ fun LoginScreen(
                     if (isValid) {
                         snackbarHostState.showSnackbar(
                             message = "Welcome to SoundIn",
-
                         )
+                        onLoginSuccess()
                     } else {
                       snackbarHostState.showSnackbar(
                           message = "Please, review the marked fields"
