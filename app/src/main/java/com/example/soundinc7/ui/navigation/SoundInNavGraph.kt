@@ -34,6 +34,11 @@ fun SoundInNavGraph(
                     navController.navigate(SoundInRoutes.LOGIN){
                         popUpTo (SoundInRoutes.LOGIN) {inclusive = true}
                     }
+                },
+                onRegisterSuccess = {
+                    navController.navigate(SoundInRoutes.MAIN){
+                        popUpTo(SoundInRoutes.REGISTER){inclusive = true}
+                    }
                 }
             )
         }

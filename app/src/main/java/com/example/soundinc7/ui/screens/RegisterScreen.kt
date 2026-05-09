@@ -324,7 +324,8 @@ fun RegisterContent(
 @Composable
 fun RegisterScreen(
     viewModel: RegisterViewModel = viewModel(),
-    onNavigateToLogin: () -> Unit
+    onNavigateToLogin: () -> Unit,
+    onRegisterSuccess: () -> Unit
 ) {
 
     val name by viewModel.name.collectAsStateWithLifecycle()
@@ -435,6 +436,7 @@ fun RegisterScreen(
                             actionLabel = "Dismiss",
                             duration = SnackbarDuration.Short
                         )
+                        onRegisterSuccess()
                     } else{
                         snackbarHostState.showSnackbar(
                             "Please review the marked fields",
@@ -458,7 +460,8 @@ fun RegisterContentPreview() {
 fun RegisterScreenPreview() {
     SoundInC7Theme {
         RegisterScreen(
-            onNavigateToLogin = {}
+            onNavigateToLogin = {},
+            onRegisterSuccess = {}
         )
     }
 }
