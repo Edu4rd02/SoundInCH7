@@ -24,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
@@ -49,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.soundinc7.ui.LoginViewModel
+import com.example.soundinc7.ui.UserSessionViewModel
 import com.example.soundinc7.ui.theme.SoundInC7Theme
 import kotlinx.coroutines.launch
 
@@ -171,6 +173,7 @@ fun LoginContent(
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
+    sessionViewModel: UserSessionViewModel,
     onNavigateToRegister: () -> Unit,
     onLoginSuccess: () -> Unit
 ){
@@ -205,7 +208,7 @@ fun LoginScreen(
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) {
-        paddingValues ->
+            paddingValues ->
         LoginContent(
             paddingValues = paddingValues,
             email = email,
@@ -220,14 +223,20 @@ fun LoginScreen(
                 val isValid = viewModel.validateAndLogin()
                 scope.launch {
                     if (isValid) {
+                        sessionViewModel.login(
+                            name = "John Doe",
+                            email = email
+                        )
                         snackbarHostState.showSnackbar(
                             message = "Welcome to SoundIn",
+                            actionLabel = "Go",
+                            duration = SnackbarDuration.Short
                         )
                         onLoginSuccess()
                     } else {
-                      snackbarHostState.showSnackbar(
-                          message = "Please, review the marked fields"
-                      )
+                        snackbarHostState.showSnackbar(
+                            message = "Please, review the marked fields"
+                        )
                     }
                 }
             },
